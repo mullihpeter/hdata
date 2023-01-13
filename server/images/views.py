@@ -12,15 +12,15 @@ from django.urls import reverse_lazy
 from .models import Image
 
 
-class PhotoListView(ListView):
+class ImageListView(ListView):
     model = Image
 
     template_name = 'image_app/list.html'
 
-    context_object_name = 'photos'
+    context_object_name = 'images'
 
 
-class PhotoTagListView(PhotoListView):
+class ImageTagListView(ImageListView):
     template_name = 'image_app/taglist.html'
 
     # Custom function
@@ -36,25 +36,25 @@ class PhotoTagListView(PhotoListView):
         return context
 
 
-class PhotoDetailView(DetailView):
+class ImageDetailView(DetailView):
     model = Image
 
     template_name = 'image_app/detail.html'
 
-    context_object_name = 'photo'
+    context_object_name = 'image'
 
 
-class PhotoCreateView(LoginRequiredMixin, CreateView):
+class ImageCreateView(LoginRequiredMixin, CreateView):
     model = Image
 
     fields = ['title', 'description', 'image', 'tags']
 
     template_name = 'image_app/create.html'
 
-    success_url = reverse_lazy('photo:list')
+    success_url = reverse_lazy('image:list')
 
     def form_valid(self, form):
-        form.instance.submitter = self.request.user
+        form.instance.owner = self.request.user
 
         return super().form_valid(form)
 
@@ -68,24 +68,24 @@ class UserIsSubmitter(UserPassesTestMixin):
     def test_func(self):
 
         if self.request.user.is_authenticated:
-            return self.request.user == self.get_photo().submitter
+            return self.request.user == self.get_photo().owner
         else:
             raise PermissionDenied('Sorry you are not allowed here')
 
 
-class PhotoUpdateView(UserIsSubmitter, UpdateView):
+class ImageUpdateView(UserIsSubmitter, UpdateView):
     template_name = 'image_app/update.html'
 
     model = Image
 
     fields = ['title', 'description', 'tags']
 
-    success_url = reverse_lazy('photo:list')
+    success_url = reverse_lazy('image:list')
 
 
-class PhotoDeleteView(UserIsSubmitter, DeleteView):
+class ImageDeleteView(UserIsSubmitter, DeleteView):
     template_name = 'image_app/delete.html'
 
     model = Image
 
-    success_url = reverse_lazy('photo:list')
+    success_url = reverse_lazy('image:list')

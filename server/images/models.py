@@ -2,7 +2,6 @@
 from django.db import models
 
 from users.models import User
-
 from taggit.managers import TaggableManager
 
 class Image(models.Model):
