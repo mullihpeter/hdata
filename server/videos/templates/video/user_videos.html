@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+{% block content %}
+    <div>
+        {% for item in videos %}
+        <h4>Videos for {{ item.owner.username }}</h4>
+        <h5><a href="{% url 'video:video-detail' item.id %}">{{ item.title }}</a></h5>
+        <h12>{{ item.upload_date}}</h12>
+        <p>{{ item.description}}</p>
+        <video controls>
+            <source src="{{ item.video.url }}" type="video/mp4">
+          </video>
+
+        {% endfor %}
+    </div>
+{% endblock content %}

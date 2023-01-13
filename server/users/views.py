@@ -48,7 +48,7 @@ def profile(request):
             return redirect("profile")
     else:
         userform = UserChangeForm(instance=request.user)
-        profileform = UserProfileUpdateForm(instance=request.user.userprofile)
+        profileform = UserProfileUpdateForm(instance=request.user.user_profile)
 
     context = {
         'userform': userform,

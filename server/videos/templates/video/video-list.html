@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% block content %}
+    <div>
+        <h1>Video App </h1>
+    <div>
+        {% for item in videos%}
+        <div class="card" style="width: 40rem; margin: 20px; box-shadow: 12em;">
+            <img class="rounded-circle border-dark" src="{{ item.owner.profile.image.url }}" style="border-color: red;" width="30" height="30">
+            <a class="mr-2" href="{% url 'video:user-videos' item.owner.username %}" style="text-align: start;">{{ item.owner }}</a>
+            <h12 style="text-align: start;">{{ item.upload_date }}</h12>
+            <video class="card-image-top" controls>
+                <source src="{{ item.video.url }}" type="video/mp4">
+              </video>
+            <div class="card-body">
+              <h6 class="card-title"><a href="{% url 'video:video-detail' item.id  %}">{{ item.title }}</a></h6>
+              <p class="card-text">{{item.description }}</p>
+            </div>
+            <hr>
+          </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

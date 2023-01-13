@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('images.urls')),
     path('', include('users.urls')),
+    path('', include('videos.urls')),
     path('avatar/', include('avatar.urls')),
 ]
 if settings.DEBUG:
